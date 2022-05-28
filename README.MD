@@ -1,6 +1,6 @@
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://github.com/x07ex/x07ex/blob/main/assets/kalium.svg" alt="" href="https://kalium.sh"/>
+  <a href="https://kalium.sh">
+    <img src="https://github.com/x07ex/x07ex/blob/main/assets/kalium.svg" alt="" />
   </a>
   <h3 align="center">Kalium</h3>
   <p align="center">
