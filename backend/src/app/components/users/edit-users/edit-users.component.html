@@ -1,0 +1,167 @@
+<app-sidebar></app-sidebar>
+
+<!-- Page title-->
+<div class="main-content bg-dark">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Header -->
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Módulo</h6>
+
+                <!-- Title -->
+                <h1 class="header-title text-white"><b>Usuarios</b></h1>
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+        </div>
+
+        <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+          <div class="card box-shadow-sm">
+            <div class="card-header">
+              <h5 style="margin-bottom: 0px">Actualizar usuario</h5>
+            </div>
+            <ng-container *ngIf="loadData">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <div
+                      class="spinner-border"
+                      style="width: 3rem; height: 3rem"
+                      role="status"
+                    >
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!loadData">
+              <div class="card-body" *ngIf="user != undefined">
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Username</label
+                    >
+                    <input
+                      class="form-control"
+                      type="text"
+                      required
+                      name="username"
+                      [(ngModel)]="user.username"
+                    />
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Nombres</label
+                    >
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Nombres completos"
+                      required
+                      name="name"
+                      [(ngModel)]="user.name"
+                    />
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Apellidos</label
+                    >
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Apellidos completos"
+                      required
+                      name="lastnames"
+                      [(ngModel)]="user.lastnames"
+                    />
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Correo electrónico</label
+                    >
+                    <input
+                      class="form-control"
+                      type="email"
+                      placeholder="Correo electrónico"
+                      required
+                      name="mail"
+                      [(ngModel)]="user.mail"
+                    />
+                  </div>
+
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Telefono</label
+                    >
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Telefono"
+                      required
+                      name="phone"
+                      [(ngModel)]="user.phone"
+                    />
+                  </div>
+
+                  <div class="col-md-4 form-group">
+                    <label for="validationCustom01" class="form-label"
+                      >Rol</label
+                    >
+                    <input
+                      class="form-control"
+                      type="text"
+                      required
+                      name="role"
+                      [(ngModel)]="user.role"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="user == undefined">
+                <h3 class="text-center">No se encontro el registro</h3>
+                <div class="row">
+                  <div class="col-3 mx-auto">
+                    <img src="" alt="" style="width: 100%" />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="card-footer">
+              <button
+                *ngIf="!loadBTN"
+                class="btn btn-primary mr-3"
+                type="submit"
+              >
+                Actualizar usuario
+              </button>
+              <button
+                *ngIf="loadBTN"
+                type="button"
+                class="btn btn-secondary"
+                disabled
+              >
+                <span
+                  class="spinner-grow spinner-grow-sm mr-3"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Actualizando...
+              </button>
+              <a [routerLink]="['/users']" class="btn btn-secondary"
+                >Regresar</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

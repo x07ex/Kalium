@@ -1,0 +1,192 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content bg-dark">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Header -->
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Módulo</h6>
+
+                <!-- Title -->
+                <h1 class="header-title text-white"><b>Usuarios</b></h1>
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+        </div>
+        <div class="border-bottom pt-5 mt-2 mb-5">
+          <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+            <p class="text-muted">
+              Este módulo lista todos los usuarios de la web.
+            </p>
+            <p class="font-size-sm font-weight-medium">
+              <a class="text-nowrap" [routerLink]="['/users/register']"
+                >Registrar nuevo<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"
+                ></i
+              ></a>
+            </p>
+          </div>
+        </div>
+        <!-- Alert -->
+
+        <!-- Card -->
+        <div class="card">
+          <div class="card-header">
+            <!-- Title -->
+            <h4 class="card-header-title text-dark">
+              Mostrando todos todos los usuarios registrados
+            </h4>
+          </div>
+          <div class="card-body">
+            <div class="input-group input-group-merge">
+              <input
+                type="text"
+                class="form-control form-control-appended"
+                placeholder="Buscar usuario..."
+                name="filtro"
+                [(ngModel)]="filtro"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-primary" (click)="filterUsers()">
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-nowrap card-table">
+              <thead>
+                <tr>
+                  <th>Names</th>
+                  <th>Mail</th>
+                  <th>Phone</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody class="font-size-base">
+                <tr
+                  *ngFor="
+                    let item of users
+                      | slice
+                        : (page - 1) * pageSize
+                        : (page - 1) * pageSize + pageSize
+                  "
+                >
+                  <td>
+                    <a class="text-primary"
+                      >{{ item.name }} {{ item.lastnames }}</a
+                    >
+                  </td>
+                  <td>
+                    {{ item.mail }}
+                  </td>
+
+                  <td>
+                    <span class="text-primary" *ngIf="item.phone">{{
+                      item.phone
+                    }}</span>
+                    <span class="text-danger" *ngIf="!item.phone"
+                      >No registrado</span
+                    >
+                  </td>
+                  <td>
+                    <div
+                      class="btn-group dropdown d-inline-block mb-1 mr-2 my-2"
+                    >
+                      <button
+                        class="btn btn-outline-primary font-weight-bold text-dark btn-sm dropdown-toggle"
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Options
+                      </button>
+                      <div class="dropdown-menu">
+                        <a
+                          class="dropdown-item text-success"
+                          [routerLink]="['/users/', item._id]"
+                          >Crear usuario</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          [routerLink]="['/users/', item._id]"
+                          >Editar usuario</a
+                        >
+                        <a
+                          class="dropdown-item text-danger"
+                          style="cursor: pointer"
+                          data-toggle="modal"
+                          [attr.data-target]="'#deleteUser-' + item._id"
+                          >Eliminar usuario</a
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="modal fade"
+                      id="deleteUser-{{ item._id }}"
+                      tabindex="-1"
+                      style="display: none"
+                      aria-hidden="true"
+                    >
+                      <div
+                        class="modal-dialog modal-dialog-centered"
+                        role="document"
+                      >
+                        <div class="modal-content">
+                          <div class="modal-header-center">
+                            <h4 class="modal-title text-center">
+                              {{ item.name }} {{ item.lastnames }}
+                            </h4>
+                          </div>
+                          <div class="modal-body text-center font-weight-bold">
+                            <p>¿Seguro que quiere eliminar el usuario?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              class="btn btn-secondary btn-sm"
+                              type="button"
+                              data-dismiss="modal"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              class="btn btn-danger btn-shadow btn-sm"
+                              (click)="deleteUser(item._id)"
+                              type="button"
+                            >
+                              Si, eliminar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ngb-pagination
+          class="bg-dark"
+          *ngIf="users.length >= 1"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [maxSize]="10"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          [collectionSize]="users.length"
+        ></ngb-pagination>
+
+        <br />
+      </div>
+    </div>
+    <!-- / .row -->
+  </div>
+</div>

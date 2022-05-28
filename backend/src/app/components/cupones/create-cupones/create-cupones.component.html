@@ -1,0 +1,131 @@
+<app-sidebar></app-sidebar>
+
+<!-- Page title-->
+<div class="main-content bg-dark">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Header -->
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Módulo</h6>
+
+                <!-- Title -->
+                <h1 class="header-title text-white"><b>Cupones</b></h1>
+                <div class="border-bottom pt-5 mt-2 mb-5">
+                  <div
+                    class="d-flex flex-wrap flex-md-nowrap justify-content-between"
+                  >
+                    <p class="text-muted">
+                      Este módulo lista todos los cupones de la tienda.
+                    </p>
+                  </div>
+                </div>
+
+                <form
+                  #registroForm="ngForm"
+                  (ngSubmit)="registro(registroForm)"
+                >
+                  <div class="card box-shadow-sm">
+                    <div class="card-header">
+                      <h5 style="margin-bottom: 0px">Registro de cupón</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-6 form-group">
+                          <label for="validationCustom01" class="form-label"
+                            >Código de cupón</label
+                          >
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Código de cupón"
+                            required
+                            name="codigo"
+                            [(ngModel)]="cupon.code"
+                          />
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+                          <label for="validationCustom01" class="form-label"
+                            >Tipo</label
+                          >
+                          <select
+                            class="form-control custom-select"
+                            name="tipo"
+                            required
+                            [(ngModel)]="cupon.type"
+                          >
+                            <option value="" disabled selected>
+                              Seleccionar
+                            </option>
+                            <option value="Porcentaje">Porcentaje</option>
+                            <option value="Valor fijo">Valor fijo</option>
+                          </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 form-group">
+                          <label for="validationCustom01" class="form-label"
+                            >Valor</label
+                          >
+                          <input
+                            class="form-control"
+                            type="number"
+                            placeholder="Valor del descuento"
+                            required
+                            name="valor"
+                            [(ngModel)]="cupon.value"
+                          />
+                        </div>
+                        <div class="col-lg-3 col-md-6 form-group">
+                          <label for="validationCustom01" class="form-label"
+                            >Limite</label
+                          >
+                          <input
+                            class="form-control"
+                            type="number"
+                            placeholder="Limite maximo"
+                            required
+                            name="limite"
+                            [(ngModel)]="cupon.limit"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <button
+                        *ngIf="!loadBTN"
+                        class="btn btn-primary mr-3"
+                        type="submit"
+                      >
+                        Crear cupón
+                      </button>
+                      <button
+                        *ngIf="loadBTN"
+                        type="button"
+                        class="btn btn-secondary"
+                        disabled
+                      >
+                        <span
+                          class="spinner-grow spinner-grow-sm mr-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Creando...
+                      </button>
+                      <a [routerLink]="['/cupones']" class="btn btn-warning"
+                        >Regresar</a
+                      >
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

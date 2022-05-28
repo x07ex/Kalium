@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div
+      class="col-12 col-md-5 col-xl-4 my-5"
+      style="margin-top: 10rem !important"
+    >
+      <!-- Heading -->
+      <h1 class="display-4 text-center mb-3 text-white">Iniciar Sesión</h1>
+
+      <!-- Subheading -->
+      <h4 class="text-muted text-center mb-5 text-white">
+        Panel administrativo de
+        <p class="text-danger">Kalium.</p>
+      </h4>
+
+      <!-- Form -->
+      <form #loginForm="ngForm" (ngSubmit)="Login(loginForm)">
+        <!-- Email address -->
+        <div class="form-group text-white">
+          <!-- Label -->
+          <i class="fa-solid fa-at"></i>
+          <label>&nbsp;&nbsp;Correo electrónico</label>
+
+          <!-- Input -->
+          <input
+            type="email"
+            class="form-control"
+            required
+            placeholder="name@address.com"
+            #email="ngModel"
+            name="email"
+            [(ngModel)]="admin.email"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="form-group text-white">
+          <div class="row">
+            <div class="col">
+              <!-- Label -->
+
+              <i class="fa-solid fa-lock"></i>
+              <label>&nbsp;&nbsp;Contraseña</label>
+            </div>
+          </div>
+          <!-- / .row -->
+
+          <!-- Input group -->
+          <div class="input-group input-group-merge">
+            <!-- Input -->
+            <input
+              type="password"
+              class="form-control form-control-appended"
+              placeholder="Ingresa tu contraseña"
+              id="password"
+              #password="ngModel"
+              name="password"
+              [(ngModel)]="admin.password"
+            />
+
+            <!-- Icon -->
+            <div class="input-group-append">
+              <span
+                class="input-group-text"
+                (click)="viewPassword()"
+                style="cursor: pointer"
+              >
+                <i class="fe fe-eye"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          class="btn btn-lg btn-block btn-outline-danger mb-3"
+          type="submit"
+        >
+          Iniciar sesión
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- / .row -->
+</div>
+<!-- / .container -->

@@ -1,0 +1,153 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content bg-dark">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Header -->
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Módulo</h6>
+
+                <!-- Title -->
+                <h1 class="header-title text-white"><b>Usuarios</b></h1>
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+        </div>
+        <form #registroForm="ngForm" (ngSubmit)="register(registroForm)">
+          <div class="card box-shadow-sm">
+            <div class="card-header">
+              <h5 style="margin-bottom: 0px">Registro de user</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Nombres</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Nombres completos"
+                    required
+                    name="nombres"
+                    [(ngModel)]="user.name"
+                  />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Apellidos</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Apellidos completos"
+                    required
+                    name="apellidos"
+                    [(ngModel)]="user.lastnames"
+                  />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Correo electrónico</label
+                  >
+                  <input
+                    class="form-control"
+                    type="email"
+                    placeholder="Correo electrónico"
+                    required
+                    name="email"
+                    [(ngModel)]="user.mail"
+                  />
+                </div>
+
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Telefono</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Telefono"
+                    required
+                    name="telefono"
+                    [(ngModel)]="user.phone"
+                  />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Fecha nacimiento</label
+                  >
+                  <input
+                    class="form-control"
+                    type="date"
+                    required
+                    name="f_nacimiento"
+                    [(ngModel)]="user.birthday"
+                  />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label">DNI</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    placeholder="DNI"
+                    required
+                    name="dni"
+                    [(ngModel)]="user.username"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom01" class="form-label"
+                    >Genero</label
+                  >
+                  <select
+                    class="form-control custom-select"
+                    name="genero"
+                    required
+                    [(ngModel)]="user.role"
+                  >
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                *ngIf="!LoadBTN"
+                class="btn btn-primary mr-3"
+                type="submit"
+              >
+                Crear user
+              </button>
+              <button
+                *ngIf="LoadBTN"
+                type="button"
+                class="btn btn-secondary"
+                disabled
+              >
+                <span
+                  class="spinner-grow spinner-grow-sm mr-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Creando...
+              </button>
+              <a [routerLink]="['/panel/users']" class="btn btn-warning"
+                >Regresar</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

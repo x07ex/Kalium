@@ -1,0 +1,195 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content bg-dark">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Header -->
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Módulo</h6>
+
+                <!-- Title -->
+                <h1 class="header-title text-white"><b>Cupones</b></h1>
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+        </div>
+        <div class="border-bottom pt-5 mt-2 mb-5">
+          <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+            <p class="text-muted">
+              Este módulo lista todos los cupones de la tienda.
+            </p>
+            <p class="font-size-sm font-weight-medium">
+              <a class="text-nowrap" [routerLink]="['/cupones/register']"
+                >Registrar nuevo<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"
+                ></i
+              ></a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card box-shadow-sm">
+          <div class="card-header">
+            <h5 style="margin-bottom: 0px">Filtro de cupones</h5>
+          </div>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Buscar por código"
+                    name="filtro"
+                    [(ngModel)]="filtro"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-primary"
+                      (click)="filter()"
+                      type="button"
+                    >
+                      Filtrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Código</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Limite</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="loadData">
+                  <tr>
+                    <td class="text-center" colspan="5">
+                      <div
+                        class="spinner-border"
+                        style="width: 3rem; height: 3rem"
+                        role="status"
+                      >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <ng-container *ngIf="!loadData">
+                  <tbody
+                    *ngFor="
+                      let item of cupones
+                        | slice
+                          : (page - 1) * pageSize
+                          : (page - 1) * pageSize + pageSize
+                    "
+                  >
+                    <tr>
+                      <td>{{ item.code }}</td>
+                      <td>{{ item.type }}</td>
+                      <td>{{ item.value }}</td>
+                      <td>{{ item.limit }} restantes</td>
+                      <td>
+                        <div class="btn-group dropdown">
+                          <button
+                            class="btn btn-outline-primary font-weight-bold text-dark btn-sm dropdown-toggle"
+                            type="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            Options
+                          </button>
+                          <div class="dropdown-menu">
+                            <a
+                              [routerLink]="['/cupones/', item._id]"
+                              class="dropdown-item"
+                              >Editar cupon</a
+                            >
+                            <a
+                              class="dropdown-item text-danger"
+                              style="cursor: pointer"
+                              data-toggle="modal"
+                              [attr.data-target]="'#delete-' + item._id"
+                              >Eliminar</a
+                            >
+                          </div>
+                        </div>
+
+                        <div
+                          class="modal fade"
+                          id="delete-{{ item._id }}"
+                          tabindex="-1"
+                          style="display: none"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="modal-dialog modal-dialog-centered"
+                            role="document"
+                          >
+                            <div class="modal-content">
+                              <div class="modal-header-center">
+                                <h4 class="modal-title text-center">
+                                  Cupon: <b>{{ item.code }}</b>
+                                </h4>
+                                <button
+                                  class="close"
+                                  type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body text-center">
+                                <p>¿Seguro que quiere eliminar el cupon?</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button
+                                  class="btn btn-secondary btn-sm"
+                                  type="button"
+                                  data-dismiss="modal"
+                                >
+                                  Cancelar
+                                </button>
+                                <button
+                                  class="btn btn-danger btn-shadow btn-sm"
+                                  (click)="delete(item._id)"
+                                  type="button"
+                                >
+                                  Si, eliminar
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer">
+            <ngb-pagination
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="cupones.length"
+            ></ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
