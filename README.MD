@@ -17,7 +17,7 @@
 
 > `Configuracion:` 
 **[settings.json:](https://github.com/x07ex/Kalium/blob/main/API/src/settings.json)**
-```toml
+```fix
 {
   "Mail": {
     "email": "", // Correo del servicio de correo (gmail)
