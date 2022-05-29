@@ -9,7 +9,7 @@
 </div>
 
 > `Instalacion:`
-```toml
+```diff
 + git clone https://github.com/x07ex/Kalium
 + cd Kalium/API && npm i && npm run dev 
 + cd ../backend && npm i && ng serve
