@@ -9,8 +9,20 @@
 </div>
 
 > `Instalacion:`
-```diff
+```toml
 + git clone https://github.com/x07ex/Kalium
 + cd Kalium/API && npm i && npm run dev 
 + cd ../backend && npm i && ng serve
+```
+
+> `Configuracion:` 
+**[settings.json:](https://github.com/x07ex/Kalium/blob/main/API/src/settings.json)**
+```toml
+{
+  "Mail": {
+    "email": "", // Correo del servicio de correo (gmail)
+    "password": "" // Password del servicio de correo (gmail)
+  },
+  "secretJWT": "admin" // Secret de clave JWT (json web token)
+}
 ```
