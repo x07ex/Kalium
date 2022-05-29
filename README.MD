@@ -23,6 +23,6 @@
     "email": "", // Correo del servicio de correo (gmail)
     "password": "" // Password del servicio de correo (gmail)
   },
-  "secretJWT": "admin" // Secret de clave JWT (json web token)
+  "secretJWT": "admin" // Secret de clave JWT (JSON WEB TOKEN)
 }
 ```
