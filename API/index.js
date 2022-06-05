@@ -40,6 +40,15 @@ const express = require("express"),
       "GET, PUT, POST, DELETE, OPTIONS"
     );
     response.header("Allow", "GET, PUT, POST, DELETE, OPTIONS");
+
+    /** Vamos, a quien no le gustan los headers chistosos? */
+
+    response.header("X-Powered-By", "@x07ex");
+    response.header("Server", "iPad.3");
+    response.header(
+      "X-Hacker",
+      "Por favor querido hacker, no estropes el sistema que hice con mucho amor <3."
+    );
     next();
   });
 
