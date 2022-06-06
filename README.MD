@@ -24,7 +24,7 @@
   /** Configuracion de auth para servicios como database o claves */
   "Auth": {
     "MongoURI": "" /** URI de la conexion a la base de datos de MongoDB */,
-    "secretJWT": "admin" /** Password de las claves de JWT */
+    "secretJWT": "admin" /** Password para los JWT (JSON Web Token) */
   },
 
   /** Configuracion auth para el acceso de correo (gmail) */
