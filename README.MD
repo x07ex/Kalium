@@ -9,21 +9,28 @@
 </div>
 
 > `Instalacion:`
+
 ```diff
 - Necesitas tener Angular CLI ya instalado
 + git clone https://github.com/x07ex/Kalium
-+ cd Kalium/API && npm i && npm run dev 
++ cd Kalium/API && npm i && npm run dev
 + cd ../backend && npm i && ng serve
 ```
 
-> `Configuracion:` 
-**[settings.json:](https://github.com/x07ex/Kalium/blob/main/API/src/settings.json)**
-```fix
+> `Configuracion:` > **[settings.json:](https://github.com/x07ex/Kalium/blob/main/API/src/settings.json)**
+
+```json
 {
-  "Mail": {
-    "email": "", // Correo del servicio de correo (gmail)
-    "password": "" // Password del servicio de correo (gmail)
+  /** Configuracion de auth para servicios como database o claves */
+  "Auth": {
+    "MongoURI": "" /** URI de la conexion a la base de datos de MongoDB */,
+    "secretJWT": "admin" /** Password de las claves de JWT */
   },
-  "secretJWT": "admin" // Secret de clave JWT (JSON WEB TOKEN)
+
+  /** Configuracion auth para el acceso de correo (gmail) */
+  "Mail": {
+    "email": "" /** Email de la cuenta de correo */,
+    "password": "" /** Contraseña de la cuenta de correo */
+  }
 }
 ```
