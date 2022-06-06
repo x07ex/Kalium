@@ -25,9 +25,38 @@ export class CreateUsersComponent implements OnInit {
   register(registerForm: any) {
     if (registerForm.valid) {
       this.LoadBTN = true;
-      this.adminService
-        .registerUser(this.user, this.token)
-        .subscribe((_) => {});
+      this.adminService.registerUser(this.user, this.token).subscribe(
+        (_) => {
+          iziToast.show({
+            theme: "dark",
+            title: "GOOD",
+            position: "topCenter",
+            message: "Se registro el usuario exitosamente",
+            progressBarColor: "green",
+          });
+
+          this.user = {
+            name: "",
+            lastnames: "",
+            birthday: "",
+            phone: "",
+            email: "",
+          };
+          this.LoadBTN = false;
+          this.router.navigate(["/users"]);
+        },
+        (_) => {
+          // ...
+        }
+      );
+    } else {
+      iziToast.show({
+        theme: "dark",
+        title: "ERROR",
+        position: "topCenter",
+        message: "Los datos del formulario no son validos.",
+        progressBarColor: "red",
+      });
     }
   }
 }

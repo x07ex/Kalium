@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
           theme: "dark",
           title: "Error",
           position: "topCenter",
-          message: "Todos los campos son requeridos, vuelva a intentar.",
+          message: `Parece que el campo de ${
+            email == "" ? "email" : "contraseña"
+          } esta vacio`,
           progressBarColor: "red",
         });
       } else {
