@@ -1,6 +1,6 @@
 const jwt = require("jwt-simple"),
   moment = require("moment"),
-  { secretJWT } = require("../settings.json");
+  { Auth } = require("../settings.json");
 
 exports.auth = function (request, response, next) {
   if (!request.headers.authorization) {
@@ -17,7 +17,7 @@ exports.auth = function (request, response, next) {
       .send({ message: "[498] Token expired/invalid | Token invalid" });
   } else {
     try {
-      var payload = jwt.decode(token, secretJWT);
+      var payload = jwt.decode(token, Auth.secretJWT);
       if (payload.expired <= moment().unix()) {
         return response
           .status(498)

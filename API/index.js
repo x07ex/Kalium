@@ -1,6 +1,7 @@
 const express = require("express"),
   { urlencoded, json } = require("body-parser"),
   { connect } = require("mongoose"),
+  { Auth } = require("./src/settings.json"),
   swaggerUI = require("swagger-ui-express"),
   basicAuth = require("express-basic-auth"),
   APP = express(),
@@ -8,7 +9,7 @@ const express = require("express"),
 
 (() => {
   connect(
-    `mongodb://mongo:m6UqWcZW7eB2ekAizAaj@containers-us-west-41.railway.app:7710`,
+    Auth.MongoURI,
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -41,9 +42,12 @@ const express = require("express"),
     );
     response.header("Allow", "GET, PUT, POST, DELETE, OPTIONS");
 
-    /** Vamos, a quien no le gustan los headers chistosos? */
+    /**
+     * Referencia: pingdom.com/blog/fun-and-unusual-http-response-headers/
+     * Aunque sea tomandonos el chiste de que los headers de respuesta son estos
+     */
 
-    response.header("X-Powered-By", "@x07ex");
+    response.header("X-Powered-By", "<3 by Kalium Team");
     response.header("Server", "iPad.3");
     response.header(
       "X-Hacker",

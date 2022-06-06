@@ -1,6 +1,6 @@
 const jwt = require("jwt-simple"),
   moment = require("moment"),
-  { secretJWT } = require("../settings.json");
+  { Auth } = require("../settings.json");
 
 exports.createToken = function (user) {
   const payload = {
@@ -12,5 +12,5 @@ exports.createToken = function (user) {
     iat: moment().unix(),
     expired: moment().add(7, "days").unix(),
   };
-  return jwt.encode(payload, secretJWT);
+  return jwt.encode(payload, Auth.secretJWT);
 };
