@@ -38,7 +38,7 @@
 cd Kalium/API && npm run dev (Con nodemon)
 ```
 
-**Backend / panel:**
+> `Run:` > **Panel:**
 
 ```fix
 cd ../backend && ng serve (Con Angular-CLI)
