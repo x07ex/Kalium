@@ -27,8 +27,8 @@ const userSchema = Schema({
     type: String,
     required: false,
   },
-  profile: {
-    type: String,
+  avatar: {
+    type: Object,
     required: false,
   },
   birthday: {

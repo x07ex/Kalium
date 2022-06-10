@@ -1,5 +1,4 @@
 const express = require("express"),
-  { urlencoded, json } = require("body-parser"),
   { connect } = require("mongoose"),
   { Auth } = require("./src/settings.json"),
   swaggerUI = require("swagger-ui-express"),
@@ -27,8 +26,8 @@ const express = require("express"),
     }
   );
 
-  APP.use(urlencoded({ extended: true }));
-  APP.use(json({ limit: "50mb", extended: true }));
+  APP.use(express.urlencoded({ extended: true }));
+  APP.use(express.json({ limit: "50mb", extended: true }));
 
   APP.use((_, response, next) => {
     response.header("Access-Control-Allow-Origin", "*");
@@ -51,11 +50,14 @@ const express = require("express"),
     response.header("Server", "iPad.3");
     response.header(
       "X-Hacker",
-      "Por favor querido hacker, no estropes el sistema que hice con mucho amor <3."
+      "Por favor querido hacker, no estropes el sistema que hice con mucho amor <3333333333333333."
     );
     next();
   });
 
+  APP.use("/response", (_, response) => {
+    response.json({ message: "API RESTful" });
+  });
   APP.use("/api/v1/auth", require("./src/routes/user.route"));
   APP.use("/api/v1/auth", require("./src/routes/admin.route"));
   APP.use("/api/v1/auth", require("./src/routes/cupon.route"));

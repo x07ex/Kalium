@@ -1,6 +1,6 @@
 {
   "Auth": {
-    "MongoURI": "mongodb://mongo:m6UqWcZW7eB2ekAizAaj@containers-us-west-41.railway.app:7710",
+    "MongoURI": "",
     "secretJWT": "admin"
   },
   "Mail": {
