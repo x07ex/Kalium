@@ -10,7 +10,8 @@ export class SidebarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-  logout() {
+
+  Logout() {
     window.location.reload();
     localStorage.removeItem("token");
     localStorage.removeItem("ID");

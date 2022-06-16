@@ -33,7 +33,7 @@
                   <input
                     class="form-control"
                     type="text"
-                    placeholder="Nombres completos"
+                    placeholder="Nombre"
                     required
                     name="nombres"
                     [(ngModel)]="user.name"
@@ -46,7 +46,7 @@
                   <input
                     class="form-control"
                     type="text"
-                    placeholder="Apellidos completos"
+                    placeholder="Apellidos"
                     required
                     name="apellidos"
                     [(ngModel)]="user.lastnames"
@@ -59,13 +59,39 @@
                   <input
                     class="form-control"
                     type="email"
-                    placeholder="Correo electrónico"
+                    placeholder="Correo"
                     required
-                    name="email"
+                    name="mail"
                     [(ngModel)]="user.mail"
                   />
                 </div>
-
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="password"
+                    placeholder="Password"
+                    required
+                    name="password"
+                    [(ngModel)]="user.password"
+                  />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="validationCustom01" class="form-label"
+                    >Username</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Usuario"
+                    required
+                    name="username"
+                    [(ngModel)]="user.username"
+                  />
+                </div>
                 <div class="col-md-4 form-group">
                   <label for="validationCustom01" class="form-label"
                     >Telefono</label
@@ -75,48 +101,9 @@
                     type="text"
                     placeholder="Telefono"
                     required
-                    name="telefono"
+                    name="phone"
                     [(ngModel)]="user.phone"
                   />
-                </div>
-                <div class="col-md-4 form-group">
-                  <label for="validationCustom01" class="form-label"
-                    >Fecha nacimiento</label
-                  >
-                  <input
-                    class="form-control"
-                    type="date"
-                    required
-                    name="f_nacimiento"
-                    [(ngModel)]="user.birthday"
-                  />
-                </div>
-                <div class="col-md-4 form-group">
-                  <label for="validationCustom01" class="form-label">DNI</label>
-                  <input
-                    class="form-control"
-                    type="number"
-                    placeholder="DNI"
-                    required
-                    name="dni"
-                    [(ngModel)]="user.username"
-                  />
-                </div>
-
-                <div class="col-md-4">
-                  <label for="validationCustom01" class="form-label"
-                    >Genero</label
-                  >
-                  <select
-                    class="form-control custom-select"
-                    name="genero"
-                    required
-                    [(ngModel)]="user.role"
-                  >
-                    <option value="" disabled selected>Seleccionar</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                  </select>
                 </div>
               </div>
             </div>
@@ -126,7 +113,7 @@
                 class="btn btn-primary mr-3"
                 type="submit"
               >
-                Crear user
+                Crear usuario
               </button>
               <button
                 *ngIf="LoadBTN"
@@ -141,9 +128,7 @@
                 ></span>
                 Creando...
               </button>
-              <a [routerLink]="['/panel/users']" class="btn btn-warning"
-                >Regresar</a
-              >
+              <a [routerLink]="['/users']" class="btn btn-warning">Regresar</a>
             </div>
           </div>
         </form>

@@ -11,8 +11,14 @@ export class DashboardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const data = localStorage.getItem("adminData");
-    const json = JSON.parse(`${data}`);
-    this.admin = json.name;
+    // const data = localStorage.getItem("adminData");
+    // const json = JSON.parse(`${data}`);
+    // this.admin = json.name;
+
+    console.clear();
+    console.log(
+      "%c Login successfully...",
+      "color: red; font-size: 30px; font-weight: bold;"
+    );
   }
 }

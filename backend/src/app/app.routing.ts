@@ -32,7 +32,7 @@ const APPRoute: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "users/:id",
+    path: "users/edit/:id",
     component: EditUsersComponent,
     canActivate: [AuthGuard],
   },

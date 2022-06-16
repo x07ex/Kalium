@@ -94,11 +94,19 @@ export class AdminService {
       headers: headers,
     });
   }
+
   getUser(id: any, token: any): Observable<any> {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: token,
     });
     return this.HTTP.get(this.url + "getUser/" + id, { headers: headers });
+  }
+
+  checkIP(ipv4: any): Observable<any> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+    return this.HTTP.get(this.url + "checkIP/" + ipv4, { headers: headers });
   }
 }

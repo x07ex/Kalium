@@ -11,8 +11,14 @@ declare const iziToast: any;
 })
 export class CreateUsersComponent implements OnInit {
   public user: any = {
-    genero: "",
+    name: "",
+    lastnames: "",
+    mail: "",
+    password: "",
+    username: "",
+    phone: "",
   };
+
   public token: any;
   public LoadBTN = false;
 
@@ -24,31 +30,47 @@ export class CreateUsersComponent implements OnInit {
 
   register(registerForm: any) {
     if (registerForm.valid) {
-      this.LoadBTN = true;
-      this.adminService.registerUser(this.user, this.token).subscribe(
-        (_) => {
-          iziToast.show({
-            theme: "dark",
-            title: "GOOD",
-            position: "topCenter",
-            message: "Se registro el usuario exitosamente",
-            progressBarColor: "green",
-          });
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.user.mail)) {
+        iziToast.show({
+          theme: "dark",
+          title: "Error",
+          position: "topCenter",
+          message: "El correo no es valido [exm: name@domain.com]",
+          progressBarColor: "red",
+        });
+      } else {
+        this.LoadBTN = true;
+        this.adminService.registerUser(this.user, this.token).subscribe(
+          (_) => {
+            iziToast.show({
+              theme: "dark",
+              title: "GOOD",
+              position: "topCenter",
+              message: "Se registro el usuario exitosamente",
+              progressBarColor: "green",
+            });
 
-          this.user = {
-            name: "",
-            lastnames: "",
-            birthday: "",
-            phone: "",
-            email: "",
-          };
-          this.LoadBTN = false;
-          this.router.navigate(["/users"]);
-        },
-        (_) => {
-          // ...
-        }
-      );
+            this.user = {
+              name: "",
+              lastnames: "",
+              birthday: "",
+              phone: "",
+              email: "",
+            };
+            this.LoadBTN = false;
+            this.router.navigate(["/users"]);
+          },
+          (_) => {
+            iziToast.show({
+              theme: "dark",
+              title: "Error",
+              position: "topCenter",
+              message: "No se pudo registrar. > Mira consola",
+              progressBarColor: "red",
+            });
+          }
+        );
+      }
     } else {
       iziToast.show({
         theme: "dark",

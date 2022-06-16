@@ -4,81 +4,102 @@
       class="col-12 col-md-5 col-xl-4 my-5"
       style="margin-top: 10rem !important"
     >
-      <!-- Heading -->
-      <h1 class="display-4 text-center mb-3 text-white">Iniciar Sesión</h1>
+      <ng-template [ngIf]="malo == true">
+        <!-- Heading -->
+        <img src="../../../assets/kalium.svg" class="mx-auto d-block" />
+        <hr class="my-3" />
+        <h1 class="display-4 text-center mb-3 text-white">
+          Acceso restringido
+        </h1>
+        <hr class="navbar-divider my-2" />
 
-      <!-- Subheading -->
-      <h4 class="text-muted text-center mb-5 text-white">
-        Panel administrativo de
-        <p class="text-danger">Kalium.</p>
-      </h4>
+        <!-- Subheading -->
+        <h4 class="text-muted text-center mb-5 text-white">
+          Su dirección IP ha sido detectado como un
+          <strong class="text-danger">riesgo de seguridad potencial.</strong>
+          Debido a diversos factores,
+          <strong class="text-warning"
+            ><u>su acceso ha sido limitado.</u></strong
+          >
+        </h4>
+      </ng-template>
+      <ng-template [ngIf]="malo == false">
+        <!-- Heading -->
+        <h1 class="display-4 text-center mb-3 text-white">Iniciar Sesión</h1>
 
-      <!-- Form -->
-      <form #loginForm="ngForm" (ngSubmit)="Login(loginForm)">
-        <!-- Email address -->
-        <div class="form-group text-white">
-          <!-- Label -->
-          <i class="fa-solid fa-at"></i>
-          <label>&nbsp;&nbsp;Correo electrónico</label>
+        <!-- Subheading -->
+        <h4 class="text-muted text-center mb-5 text-white">
+          Panel administrativo de
+          <p class="text-danger">Kalium.</p>
+        </h4>
 
-          <!-- Input -->
-          <input
-            type="email"
-            class="form-control"
-            required
-            placeholder="name@address.com"
-            #email="ngModel"
-            name="email"
-            [(ngModel)]="admin.email"
-          />
-        </div>
+        <!-- Form -->
+        <form #loginForm="ngForm" (ngSubmit)="Login(loginForm)">
+          <!-- Email address -->
+          <div class="form-group text-white">
+            <!-- Label -->
+            <i class="fa-solid fa-at"></i>
+            <label>&nbsp;&nbsp;Correo electrónico</label>
 
-        <!-- Password -->
-        <div class="form-group text-white">
-          <div class="row">
-            <div class="col">
-              <!-- Label -->
-
-              <i class="fa-solid fa-lock"></i>
-              <label>&nbsp;&nbsp;Contraseña</label>
-            </div>
-          </div>
-          <!-- / .row -->
-
-          <!-- Input group -->
-          <div class="input-group input-group-merge">
             <!-- Input -->
             <input
-              type="password"
-              class="form-control form-control-appended"
-              placeholder="Ingresa tu contraseña"
-              id="password"
-              #password="ngModel"
-              name="password"
-              [(ngModel)]="admin.password"
+              type="email"
+              class="form-control"
+              required
+              placeholder="name@address.com"
+              #email="ngModel"
+              name="email"
+              [(ngModel)]="admin.email"
             />
+          </div>
 
-            <!-- Icon -->
-            <div class="input-group-append">
-              <span
-                class="input-group-text"
-                (click)="viewPassword()"
-                style="cursor: pointer"
-              >
-                <i class="fe fe-eye"></i>
-              </span>
+          <!-- Password -->
+          <div class="form-group text-white">
+            <div class="row">
+              <div class="col">
+                <!-- Label -->
+
+                <i class="fa-solid fa-lock"></i>
+                <label>&nbsp;&nbsp;Contraseña</label>
+              </div>
+            </div>
+            <!-- / .row -->
+
+            <!-- Input group -->
+            <div class="input-group input-group-merge">
+              <!-- Input -->
+              <input
+                type="password"
+                class="form-control form-control-appended"
+                placeholder="Ingresa tu contraseña"
+                id="password"
+                #password="ngModel"
+                name="password"
+                [(ngModel)]="admin.password"
+              />
+
+              <!-- Icon -->
+              <div class="input-group-append">
+                <span
+                  class="input-group-text"
+                  (click)="viewPassword()"
+                  style="cursor: pointer"
+                >
+                  <i class="fe fe-eye"></i>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Submit -->
-        <button
-          class="btn btn-lg btn-block btn-outline-danger mb-3"
-          type="submit"
-        >
-          Iniciar sesión
-        </button>
-      </form>
+          <!-- Submit -->
+          <button
+            class="btn btn-lg btn-block btn-outline-danger mb-3"
+            type="submit"
+          >
+            Iniciar sesión
+          </button>
+        </form>
+      </ng-template>
     </div>
   </div>
   <!-- / .row -->
