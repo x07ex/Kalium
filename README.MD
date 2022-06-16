@@ -22,7 +22,8 @@
 {
   "Auth": {
     "MongoURI": "MongoURI here",
-    "secretJWT": "Key JSON WEB TOKEN here"
+    "secretJWT": "Key JSON WEB TOKEN here",
+    "AbuseIPKey": "API key of AbuseIPDB"
   },
 
   "Mail": {
