@@ -17,7 +17,7 @@ const userSchema = Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/],
+    /** match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]  Removido por errors inconcientes de Regex */
   },
   password: {
     type: String,

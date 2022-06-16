@@ -8,5 +8,6 @@ route.post("/loginAdmin", adminController.loginAdmin);
 
 route.get("/listAdmins", auth.auth, adminController.listAdmins);
 route.get("/verifyToken", auth.auth, adminController.verifyToken);
+route.get("/checkIP/:ipv4", adminController.checkIP);
 
 module.exports = route;

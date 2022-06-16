@@ -1,7 +1,8 @@
 {
   "Auth": {
     "MongoURI": "",
-    "secretJWT": "admin"
+    "secretJWT": "admin",
+    "AbuseIPKey": ""
   },
   "Mail": {
     "email": "",

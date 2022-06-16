@@ -18,9 +18,23 @@ const express = require("express"),
       else
         APP.listen(PORT, () => {
           console.clear();
-          console.log(`[Server] Iniciado exitosamente en el puerto: ${PORT}.`);
           console.log(
-            `[Database] Base de datos conectado y funcionando exitosamente.`
+            `
+                                    \t\t\t\t ● Sistema / API: ●
+
+                \t\t\t [Server] Iniciado exitosamente en el puerto: ${PORT}.
+                \t\t\t [Database] Base de datos conectado y funcionando exitosamente.
+
+                                    \t\t\t\t ● Status: ●
+                
+                \t\t\t [Server] Estado: Online.
+                \t\t\t [Database] Estado: Online.
+                \t\t\t [Frontend] Estado: Desarrollando...
+                \t\t\t [Backend] Estado: Desarrollando...
+                \t\t\t [API] Estado: Desarrollando...
+
+                                    \t\t\t\t ● Logs: ●
+            `
           );
         });
     }
@@ -50,7 +64,7 @@ const express = require("express"),
     response.header("Server", "iPad.3");
     response.header(
       "X-Hacker",
-      "Por favor querido hacker, no estropes el sistema que hice con mucho amor <3333333333333333."
+      "Por favor querido hacker, no estropes el sistema que hice con mucho amor <3."
     );
     next();
   });
