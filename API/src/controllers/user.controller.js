@@ -1,66 +1,14 @@
 const bcrypt = require("bcrypt"),
   jwt = require("../helpers/jwt.helper"),
   userModel = require("../models/user.model"),
-  nodemailer = require("nodemailer"),
-  { Mail } = require("../settings.json"),
-  fs = require("fs"),
-  smtpTransport = require("nodemailer-smtp-transport"),
-  ejs = require("ejs"),
-  handlebars = require("handlebars"),
-  handlerError = require("../utils/handleErrors");
-
-const sendEmailRegisterUser = async (toEmail, name) => {
-  try {
-    var readHTMLFile = function (path, callback) {
-      fs.readFile(path, { encoding: "utf-8" }, (err, html) => {
-        if (err) {
-          callback(err);
-        } else {
-          callback(null, html);
-        }
-      });
-    };
-
-    var transporter = nodemailer.createTransport(
-      smtpTransport({
-        service: "gmail",
-        host: "smtp.gmail.com",
-        auth: {
-          user: Mail.email,
-          pass: Mail.password,
-        },
-      })
-    );
-
-    readHTMLFile(
-      process.cwd() + "\\src\\mails\\mail.register.html",
-      (_, html) => {
-        const restHTML = ejs.render(html, { name, toEmail });
-        const template = handlebars.compile(restHTML);
-        const HTMLtoSend = template({ op: true });
-
-        const mailOptions = {
-          from: `Kalium Forum <no-reply@${Mail["email"].split("@")[1]}>`,
-          to: toEmail,
-          subject: "Kalium Forum - Thanks register",
-          html: HTMLtoSend,
-        };
-
-        transporter.sendMail(mailOptions, (error, _) => {
-          if (error) console.log(`[Error] | Mail :: ${error}`);
-        });
-      }
-    );
-  } catch (error) {
-    handlerError(error, response);
-  }
-};
+  handlerError = require("../utils/error.utils"),
+  { Roles } = require("../settings.json"),
+  { sendMail } = require("../helpers/mail.helper");
 
 const registerUser = async (request, response) => {
   try {
     const data = request.body;
-    let userArray = [];
-    userArray = await userModel.find({ mail: data.mail });
+    const user = (await userModel.findOne({ mail: data.mail }).count()) > 0;
 
     const signosInvalidos = ["+", "-", "*", "/", "%"];
     if (signosInvalidos.some((signo) => data.mail.includes(signo))) {
@@ -73,27 +21,29 @@ const registerUser = async (request, response) => {
         message: "[409] Conflict | Email invalid [exm: name@domain.com]",
       });
     } else {
-      if (userArray.length == 0) {
-        if (data.password) {
+      if (user === false) {
+        if (data.password && data.username && data.name && data.lastnames) {
           bcrypt.hash(data.password, 10, async (_, hash) => {
             if (hash) {
               data.password = hash;
-              data.role = "basic";
+              data.role = Roles.user[0];
 
               const result = await userModel.create(data);
               response.status(200).send({ data: result });
-              return sendEmailRegisterUser(data.mail, data.name);
+              return sendMail(
+                data.mail,
+                data.name,
+                (file = "mail.loginUser.html")
+              );
             } else {
               response.status(500).send({
                 message: "[500] Internal Server Error | Server Error",
-                data: undefined,
               });
             }
           });
         } else {
-          response.status(204).send({
-            message: "[204] No content | There is no password",
-            data: undefined,
+          response.status(409).send({
+            message: `[409] Conflict | Missing data, check the fields: (password, username, name, lastnames)`,
           });
         }
       } else {
@@ -110,20 +60,15 @@ const registerUser = async (request, response) => {
 const loginUser = async (request, response) => {
   try {
     const data = request.body;
-    let userArray = [];
-    userArray = await userModel.find({ mail: data.mail });
+    const user = await userModel.findOne({ mail: data.mail });
 
-    if (userArray.length == 0) {
-      response
-        .status(409)
-        .send({ message: "[409] Conflict | Email not found", data: undefined });
-    } else {
-      const user = userArray[0];
+    if (user) {
       bcrypt.compare(data.password, user.password, async (_, check) => {
         if (check) {
           response
             .status(200)
             .send({ data: user, token: jwt.createToken(user) });
+          return sendMail(user.mail, user.name, (file = "mail.loginUser.html"));
         } else {
           response.status(409).send({
             message: "[409] Conflict | The password or email do not match",
@@ -131,6 +76,10 @@ const loginUser = async (request, response) => {
           });
         }
       });
+    } else {
+      response
+        .status(409)
+        .send({ message: "[409] Conflict | Email not found", data: undefined });
     }
   } catch (e) {
     handlerError(response, e, 409);
@@ -155,7 +104,7 @@ const listUsers = async (request, response) => {
 const deleteUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role == Roles.user.slice(-2)) {
         const id = request.params["id"];
         const registro = await userModel.findByIdAndRemove({ _id: id });
         response.status(200).send({ data: registro });
@@ -177,7 +126,7 @@ const deleteUser = async (request, response) => {
 const getUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role == Roles.user.slice(-2)) {
         const id = request.params["id"];
 
         try {
@@ -204,7 +153,7 @@ const getUser = async (request, response) => {
 const updateUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role == Roles.user.slice(-2)) {
         const id = request.params["id"];
         const data = request.body;
 

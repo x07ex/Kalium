@@ -1,10 +1,11 @@
 const cuponController = require("../models/cupon.model"),
-  handlerError = require("../utils/handleErrors");
+  handlerError = require("../utils/error.utils"),
+  { Roles } = require("../settings.json");
 
 const registerCupon = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role in Roles.admin) {
         const data = request.body;
 
         const registro = await cuponController.create(data);
@@ -27,7 +28,7 @@ const registerCupon = async (request, response) => {
 const listCupones = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role in Roles.admin) {
         const filtro = request.params["filtro"];
 
         try {
@@ -56,7 +57,7 @@ const listCupones = async (request, response) => {
 const deleteCupon = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role in Roles.admin) {
         const id = request.params["id"];
 
         try {
@@ -83,7 +84,7 @@ const deleteCupon = async (request, response) => {
 const getCupon = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role in Roles.admin) {
         const id = request.params["id"];
 
         try {
@@ -110,7 +111,7 @@ const getCupon = async (request, response) => {
 const updateCupon = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == "admin" || "allPerms") {
+      if (request.user.role in Roles.admin) {
         const id = request.params["id"];
         const data = request.body;
 

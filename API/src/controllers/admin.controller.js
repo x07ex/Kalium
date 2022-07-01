@@ -3,16 +3,15 @@ const bcrypt = require("bcrypt"),
   adminModel = require("../models/admin.model"),
   axios = require("axios"),
   { Auth } = require("../settings.json"),
-  handlerError = require("../utils/handleErrors");
+  handlerError = require("../utils/error.utils");
 
 const registerAdmin = async (request, response) => {
   try {
     const data = request.body;
-    let adminArray = [];
-    adminArray = await adminModel.find({ mail: data.mail });
+    const admin = (await adminModel.findOne({ mail: data.mail }).count()) > 0;
 
-    if (adminArray.length == 0) {
-      if (data.password) {
+    if (admin === false) {
+      if (data.password && data.name && data.lastnames && data.phone) {
         bcrypt.hash(data.password, 10, async (_, hash) => {
           if (hash) {
             data.password = hash;
@@ -26,8 +25,9 @@ const registerAdmin = async (request, response) => {
           }
         });
       } else {
-        response.status(204).send({
-          message: "[204] No content | There is no password",
+        response.status(409).send({
+          message:
+            "[204] Conflict | Missing data, check the fields: (password, name, lastnames, phone)",
           data: undefined,
         });
       }
@@ -44,26 +44,24 @@ const registerAdmin = async (request, response) => {
 const loginAdmin = async (request, response) => {
   try {
     const data = request.body;
-    let adminArray = [];
-    adminArray = await adminModel.find({ mail: data.email });
+    const admin = await adminModel.findOne({ mail: data.mail });
 
-    if (adminArray.length == 0) {
-      response
-        .status(409)
-        .send({ message: "[409] Conflict | Email not found", data: undefined });
-    } else {
-      const user = adminArray[0];
-      bcrypt.compare(data.password, user.password, async (_, check) => {
-        if (check) {
-          response
-            .status(200)
-            .send({ data: user, token: jwt.createToken(user) });
+    if (admin) {
+      bcrypt.compare(data.password, admin.password, (_, res) => {
+        if (res) {
+          const token = jwt.createToken(admin);
+          response.status(200).send({ data: admin, token: token });
         } else {
-          response.status(409).send({
-            message: "[409] Conflict | The password or email do not match",
+          response.status(401).send({
+            message: "[401] Unauthorized | Invalid credentials",
             data: undefined,
           });
         }
+      });
+    } else {
+      response.status(401).send({
+        message: "[401] Unauthorized | Invalid credentials",
+        data: undefined,
       });
     }
   } catch (e) {

@@ -3,12 +3,24 @@ const express = require("express"),
   { Auth } = require("./src/settings.json"),
   swaggerUI = require("swagger-ui-express"),
   basicAuth = require("express-basic-auth"),
+  { success, error } = require("./src/utils/logs.utils"),
   APP = express(),
   PORT = process.env.PORT || 4201;
 
-(() => {
-  connect(
-    Auth.MongoURI,
+(async () => {
+  for (let key in Auth) {
+    if (Auth[key] === "") {
+      error(
+        `El campo: (${key}), se encuentra vacio. Configure el campo en settings.json`
+      );
+      process.exit(1);
+    }
+  }
+  const connectDB =
+    process.NODE_ENV === "test" ? Auth.MongoURITest : Auth.MongoURI;
+
+  await connect(
+    connectDB,
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -18,30 +30,18 @@ const express = require("express"),
       else
         APP.listen(PORT, () => {
           console.clear();
-          console.log(
-            `
-                                    \t\t\t\t ● Sistema / API: ●
-
-                \t\t\t [Server] Iniciado exitosamente en el puerto: ${PORT}.
-                \t\t\t [Database] Base de datos conectado y funcionando exitosamente.
-
-                                    \t\t\t\t ● Status: ●
-                
-                \t\t\t [Server] Estado: Online.
-                \t\t\t [Database] Estado: Online.
-                \t\t\t [Frontend] Estado: Desarrollando...
-                \t\t\t [Backend] Estado: Desarrollando...
-                \t\t\t [API] Estado: Desarrollando...
-
-                                    \t\t\t\t ● Logs: ●
-            `
-          );
+          success(`Servidor iniciado exitosamente en el puerto: (${PORT})`);
+          success(`Base de datos conectada exitosamente`);
+          success(`(settings.json) Configuraciones cargadas exitosamente`);
         });
     }
   );
 
   APP.use(express.urlencoded({ extended: true }));
   APP.use(express.json({ limit: "50mb", extended: true }));
+
+  APP.use(require("compression")());
+  APP.use(require("helmet")());
 
   APP.use((_, response, next) => {
     response.header("Access-Control-Allow-Origin", "*");
@@ -54,12 +54,6 @@ const express = require("express"),
       "GET, PUT, POST, DELETE, OPTIONS"
     );
     response.header("Allow", "GET, PUT, POST, DELETE, OPTIONS");
-
-    /**
-     * Referencia: pingdom.com/blog/fun-and-unusual-http-response-headers/
-     * Aunque sea tomandonos el chiste de que los headers de respuesta son estos
-     */
-
     response.header("X-Powered-By", "<3 by Kalium Team");
     response.header("Server", "iPad.3");
     response.header(
@@ -69,14 +63,12 @@ const express = require("express"),
     next();
   });
 
-  APP.use("/response", (_, response) => {
-    response.json({ message: "API RESTful" });
-  });
   APP.use("/api/v1/auth", require("./src/routes/user.route"));
   APP.use("/api/v1/auth", require("./src/routes/admin.route"));
   APP.use("/api/v1/auth", require("./src/routes/cupon.route"));
+
   APP.use(
-    "/api/v1/docs",
+    "/",
     basicAuth({
       users: { admin: "admin" },
       unauthorizedResponse: "No tienes acceso, credenciales invalidas.",

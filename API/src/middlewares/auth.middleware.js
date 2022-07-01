@@ -15,20 +15,19 @@ exports.auth = function (request, response, next) {
     return response
       .status(498)
       .send({ message: "[498] Token expired/invalid | Token invalid" });
-  } else {
-    try {
-      var payload = jwt.decode(token, Auth.secretJWT);
-      if (payload.expired <= moment().unix()) {
-        return response
-          .status(498)
-          .send({ message: "[498] Token expired/invalid | Token expired" });
-      }
-    } catch (error) {
+  }
+  try {
+    var payload = jwt.decode(token, Auth.secretJWT);
+    if (payload.expired <= moment().unix()) {
       return response
         .status(498)
-        .send({ message: "[498] Token expired/invalid | Token invalid" });
+        .send({ message: "[498] Token expired/invalid | Token expired" });
     }
-    request.user = payload;
-    next();
+  } catch (error) {
+    return response
+      .status(498)
+      .send({ message: "[498] Token expired/invalid | Token invalid" });
   }
+  request.user = payload;
+  next();
 };

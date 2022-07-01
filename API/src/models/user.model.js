@@ -1,6 +1,7 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose"),
+  { Roles } = require("../settings.json");
 
-const userSchema = Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -38,7 +39,8 @@ const userSchema = Schema({
   role: {
     type: String,
     required: true,
-    default: "basic",
+    default: Roles.user[0],
+    enum: Roles["user"],
   },
   createdAt: {
     type: Date,

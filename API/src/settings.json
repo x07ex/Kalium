@@ -1,11 +1,16 @@
 {
   "Auth": {
     "MongoURI": "",
+    "MongoURITest": "",
     "secretJWT": "admin",
     "AbuseIPKey": ""
   },
   "Mail": {
     "email": "",
     "password": ""
+  },
+  "Roles": {
+    "admin": ["staff", "moderator", "admin"],
+    "user": ["newbie", "hacker", "ovni", "omnipotent"]
   }
 }

@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const cuponSchema = Schema({
+const cuponSchema = new Schema({
   code: {
     type: String,
     required: true,
