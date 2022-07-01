@@ -13,7 +13,7 @@
 ```diff
 + git clone https://github.com/x07ex/Kalium
 + cd Kalium/API && npm i -g @angular/cli && npm i
-+ cd ../backend && npm i
++ cd ../panel && npm i
 ```
 
 > `Configuracion:` > **[settings.json:](https://github.com/x07ex/Kalium/blob/main/API/src/settings.json)**
@@ -22,13 +22,16 @@
 {
   "Auth": {
     "MongoURI": "MongoURI here",
-    "secretJWT": "Key JSON WEB TOKEN here",
-    "AbuseIPKey": "API key of AbuseIPDB"
+    "MongoURITest": "MongoURI for testing here",
+    "secretJWT": "secretJWT here",
+    "AbuseIPKey": "AbuseIPKey here (https://www.abuseipdb.com)"
   },
-
   "Mail": {
-    "email": "Mail account here (gmail)",
-    "password": "Password account here (gmail)"
+    "email": "Email for gmail here",
+    "password": "Password for gmail here"
+  },
+  "Roles": {
+    ...
   }
 }
 ```
@@ -44,5 +47,9 @@ cd Kalium/API && npm run dev (Con nodemon)
 ```fix
 cd ../backend && ng serve (Con Angular-CLI)
 ```
+
+> `Extras:`
+
+- **Documentacion del codigo: Mintlify IA**
 
 ---
