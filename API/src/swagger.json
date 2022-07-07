@@ -4,7 +4,6 @@
     "description": "Una simple documentacion del foro [kalium.sh], el cual es de uso publico - (Acceso restringido)",
     "version": "1.0.0",
     "title": "Kalium Forum",
-    "termsOfService": "localhost:4201/terms",
     "contact": { "email": "0x7ex@protonmail.com" },
     "license": {
       "name": "MIT License (MIT)",

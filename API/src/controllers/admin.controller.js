@@ -10,7 +10,7 @@ const registerAdmin = async (request, response) => {
     const data = request.body;
     const admin = (await adminModel.findOne({ mail: data.mail }).count()) > 0;
 
-    if (admin === false) {
+    if (!admin) {
       if (data.password && data.name && data.lastnames && data.phone) {
         bcrypt.hash(data.password, 10, async (_, hash) => {
           if (hash) {

@@ -1,6 +1,6 @@
 const express = require("express"),
   { connect } = require("mongoose"),
-  { Auth } = require("./src/settings.json"),
+  { Auth, AuthBasic } = require("./src/settings.json"),
   swaggerUI = require("swagger-ui-express"),
   basicAuth = require("express-basic-auth"),
   { success, error } = require("./src/utils/logs.utils"),
@@ -68,7 +68,7 @@ const express = require("express"),
   APP.use("/api/v1/auth", require("./src/routes/cupon.route"));
 
   APP.use(
-    "/",
+    "/api/v1/docs",
     basicAuth({
       users: { admin: "admin" },
       unauthorizedResponse: "No tienes acceso, credenciales invalidas.",

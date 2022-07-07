@@ -10,8 +10,8 @@ const registerUser = async (request, response) => {
     const data = request.body;
     const user = (await userModel.findOne({ mail: data.mail }).count()) > 0;
 
-    const signosInvalidos = ["+", "-", "*", "/", "%"];
-    if (signosInvalidos.some((signo) => data.mail.includes(signo))) {
+    const invalidSigns = ["+", "-", "*", "/", "%"];
+    if (invalidSigns.some((sign) => data.mail.includes(sign))) {
       response.status(409).send({
         message:
           "[409] Conflict | Mail cannot contain signs such as (+, -, *, / and %)",
@@ -21,7 +21,7 @@ const registerUser = async (request, response) => {
         message: "[409] Conflict | Email invalid [exm: name@domain.com]",
       });
     } else {
-      if (user === false) {
+      if (!user) {
         if (data.password && data.username && data.name && data.lastnames) {
           bcrypt.hash(data.password, 10, async (_, hash) => {
             if (hash) {
@@ -104,7 +104,7 @@ const listUsers = async (request, response) => {
 const deleteUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == Roles.user.slice(-2)) {
+      if (request.user.role == Roles.admin.slice(-2)) {
         const id = request.params["id"];
         const registro = await userModel.findByIdAndRemove({ _id: id });
         response.status(200).send({ data: registro });
@@ -126,7 +126,7 @@ const deleteUser = async (request, response) => {
 const getUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == Roles.user.slice(-2)) {
+      if (request.user.role == Roles.admin.slice(-2)) {
         const id = request.params["id"];
 
         try {
@@ -153,7 +153,7 @@ const getUser = async (request, response) => {
 const updateUser = async (request, response) => {
   try {
     if (request.user) {
-      if (request.user.role == Roles.user.slice(-2)) {
+      if (request.user.role == Roles.admin.slice(-2)) {
         const id = request.params["id"];
         const data = request.body;
 
